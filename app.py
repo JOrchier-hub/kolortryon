@@ -32,15 +32,15 @@ def tryon(person_img, garment_img, seed, randomize_seed):
     }
     try:
         response = requests.post(url, headers=headers, data=json.dumps(data), timeout=50)
-        print("post response code", response.status_code)
+        # print("post response code", response.status_code)
         if response.status_code == 200:
             result = response.json()['result']
             status = result['status']
             if status == "success":
                 uuid = result['result']
-                print(uuid)
+                # print(uuid)
     except Exception as err:
-        print(f"Error: {err}")
+        print(f"Post Exception Error: {err}")
         raise gr.Error("Too many users, please try again later")
     post_end_time = time.time()
     print(f"post time used: {post_end_time-post_start_time}")
@@ -49,11 +49,12 @@ def tryon(person_img, garment_img, seed, randomize_seed):
     time.sleep(9)
     Max_Retry = 10
     result_img = None
+    info = ""
     for i in range(Max_Retry):
         try:
             url = "http://" + os.environ['tryon_url'] + "Query?taskId=" + uuid
             response = requests.get(url, headers=headers, timeout=15)
-            print("get response code", response.status_code)
+            # print("get response code", response.status_code)
             if response.status_code == 200:
                 result = response.json()['result']
                 status = result['status']
@@ -65,18 +66,23 @@ def tryon(person_img, garment_img, seed, randomize_seed):
                     info = "Success"
                     break
                 elif status == "error":
+                    print(f"Status is Error")
                     raise gr.Error("Too many users, please try again later")
             else:
                 print(response.text)
                 info = "URL error, pleace contact the admin"
         except requests.exceptions.ReadTimeout:
-            print("timeout")
+            print("Http Timeout")
             info = "Too many users, please try again later"
         except Exception as err:
-            print(f"Error: {err}")
+            print(f"Get Exception Error: {err}")
         time.sleep(1)
     get_end_time = time.time()
     print(f"get time used: {get_end_time-get_start_time}")
+    print(f"all time used: {get_end_time-get_start_time+post_end_time-post_start_time}")
+    if info == "":
+        print(f"No image after {Max_Retry} retries")
+        info = "Too many users, please try again later"
 
     return result_img, seed, info
 
