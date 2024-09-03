@@ -53,7 +53,7 @@ def tryon(person_img, garment_img, seed, randomize_seed):
     for i in range(Max_Retry):
         try:
             url = "http://" + os.environ['tryon_url'] + "Query?taskId=" + uuid
-            response = requests.get(url, headers=headers, timeout=15)
+            response = requests.get(url, headers=headers, timeout=20)
             # print("get response code", response.status_code)
             if response.status_code == 200:
                 result = response.json()['result']
@@ -242,7 +242,7 @@ with gr.Blocks(css=css) as Tryon:
 
 
     # try_button.click(fn=start_tryon, inputs=[imgs, garm_img, seed, randomize_seed], outputs=[image_out, seed_used, result_info], api_name='tryon',concurrency_limit=10)
-    test_button.click(fn=tryon, inputs=[imgs, garm_img, seed, randomize_seed], outputs=[image_out, seed_used, result_info], api_name='tryon', concurrency_limit=40)
+    test_button.click(fn=tryon, inputs=[imgs, garm_img, seed, randomize_seed], outputs=[image_out, seed_used, result_info], api_name='tryon', concurrency_limit=60)
 
     with gr.Column(elem_id = "col-showcase"):
         gr.HTML("""
