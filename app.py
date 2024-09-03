@@ -50,6 +50,7 @@ def tryon(person_img, garment_img, seed, randomize_seed):
     Max_Retry = 10
     result_img = None
     info = ""
+    err_log = ""
     for i in range(Max_Retry):
         try:
             url = "http://" + os.environ['tryon_url'] + "Query?taskId=" + uuid
@@ -66,23 +67,26 @@ def tryon(person_img, garment_img, seed, randomize_seed):
                     info = "Success"
                     break
                 elif status == "error":
-                    print(f"Status is Error")
-                    raise gr.Error("Too many users, please try again later")
+                    err_log = f"Status is Error"
             else:
-                print(response.text)
+                # print(response.text)
+                err_log = "URL error, pleace contact the admin"
                 info = "URL error, pleace contact the admin"
         except requests.exceptions.ReadTimeout:
-            print("Http Timeout")
+            err_log = "Http Timeout"
             info = "Too many users, please try again later"
         except Exception as err:
-            print(f"Get Exception Error: {err}")
+            err_log = f"Get Exception Error: {err}"
         time.sleep(1)
     get_end_time = time.time()
     print(f"get time used: {get_end_time-get_start_time}")
     print(f"all time used: {get_end_time-get_start_time+post_end_time-post_start_time}")
     if info == "":
-        print(f"No image after {Max_Retry} retries")
+        err_log = f"No image after {Max_Retry} retries"
         info = "Too many users, please try again later"
+    if info != "Success":
+        print(f"Error Log: {err_log}")
+        raise gr.Error("Too many users, please try again later")
 
     return result_img, seed, info
 
