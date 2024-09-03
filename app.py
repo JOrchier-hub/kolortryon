@@ -68,6 +68,7 @@ def tryon(person_img, garment_img, seed, randomize_seed):
                     break
                 elif status == "error":
                     err_log = f"Status is Error"
+                    info = "Error"
             else:
                 # print(response.text)
                 err_log = "URL error, pleace contact the admin"
@@ -81,7 +82,7 @@ def tryon(person_img, garment_img, seed, randomize_seed):
     get_end_time = time.time()
     print(f"get time used: {get_end_time-get_start_time}")
     print(f"all time used: {get_end_time-get_start_time+post_end_time-post_start_time}")
-    if info == "":
+    if result_img == None:
         err_log = f"No image after {Max_Retry} retries"
         info = "Too many users, please try again later"
     if info != "Success":
