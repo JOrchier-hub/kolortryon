@@ -82,7 +82,7 @@ def tryon(person_img, garment_img, seed, randomize_seed):
     get_end_time = time.time()
     print(f"get time used: {get_end_time-get_start_time}")
     print(f"all time used: {get_end_time-get_start_time+post_end_time-post_start_time}")
-    if result_img == None:
+    if info == "":
         err_log = f"No image after {Max_Retry} retries"
         info = "Too many users, please try again later"
     if info != "Success":
