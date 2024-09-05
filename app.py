@@ -269,6 +269,4 @@ with gr.Blocks(css=css) as Tryon:
             label=None
         )
 
-# ip = requests.get('http://ifconfig.me/ip', timeout=1).text.strip()
-# print("ip address", ip)
-Tryon.launch()
+Tryon.queue(api_open=False).launch(show_api=False)
