@@ -48,7 +48,7 @@ def tryon(person_img, garment_img, seed, randomize_seed):
 
     get_start_time =time.time()
     time.sleep(9)
-    Max_Retry = 8
+    Max_Retry = 12
     result_img = None
     info = ""
     err_log = ""
