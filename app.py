@@ -12,6 +12,7 @@ import time
 def tryon(person_img, garment_img, seed, randomize_seed):
     post_start_time = time.time()
     if person_img is None or garment_img is None:
+        gr.Warning("Empty image")
         return None, None, "Empty image"
     if randomize_seed:
         seed = random.randint(0, MAX_SEED)
@@ -69,13 +70,15 @@ def tryon(person_img, garment_img, seed, randomize_seed):
                 elif status == "error":
                     err_log = f"Status is Error"
                     info = "Error"
+                    break
             else:
                 # print(response.text)
                 err_log = "URL error, pleace contact the admin"
                 info = "URL error, pleace contact the admin"
+                break
         except requests.exceptions.ReadTimeout:
             err_log = "Http Timeout"
-            info = "Too many users, please try again later"
+            info = "Http Timeout, please try again later"
         except Exception as err:
             err_log = f"Get Exception Error: {err}"
         time.sleep(1)
@@ -87,7 +90,7 @@ def tryon(person_img, garment_img, seed, randomize_seed):
         info = "Too many users, please try again later"
     if info != "Success":
         print(f"Error Log: {err_log}")
-        raise gr.Error("Too many users, please try again later")
+        gr.Warning("Too many users, please try again later")
 
     return result_img, seed, info
 
