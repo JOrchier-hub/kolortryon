@@ -265,8 +265,8 @@ with gr.Blocks(css=css) as Tryon:
         show_case = gr.Examples(
             examples=[
                 ["assets/examples/model2.png", "assets/examples/garment2.png", "assets/examples/result2.png"],
-                ["assets/examples/model1.png", "assets/examples/garment1.png", "assets/examples/result1.png"],
                 ["assets/examples/model3.png", "assets/examples/garment3.png", "assets/examples/result3.png"],
+                ["assets/examples/model1.png", "assets/examples/garment1.png", "assets/examples/result1.png"],
             ],
             inputs=[imgs, garm_img, image_out],
             label=None
