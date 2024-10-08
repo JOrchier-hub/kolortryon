@@ -153,7 +153,7 @@ MAX_SEED = 999999
 example_path = os.path.join(os.path.dirname(__file__), 'assets')
 
 garm_list = os.listdir(os.path.join(example_path,"cloth"))
-garm_list_path = [os.path.join(example_path,"cloth",garm) for garm in garm_list]
+garm_list_path = [os.path.join(example_path,"cloth",garm) for garm in garm_list[:-1]]
 
 human_list = os.listdir(os.path.join(example_path,"human"))
 human_list_path = [os.path.join(example_path,"human",human) for human in human_list]
